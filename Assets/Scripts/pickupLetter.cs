@@ -36,43 +36,72 @@ public class pickupLetter : MonoBehaviour
                 pagesCollected = pagesCollected + 1;
                 collectText.text = pagesCollected + "/8 pages";
                 collectTextObj.SetActive(true);
-                pickupSound.Play();
+
+                PlayAudio(pickupSound);
                 if(pagesCollected == 1)
                 {
-                    ambianceLayer1.Play();
+                    PlayAudio(ambianceLayer1);
                 }
                 if (pagesCollected == 2)
                 {
-                    ambianceLayer2.Play();
+                    PlayAudio(ambianceLayer2);
                 }
                 if (pagesCollected == 3)
                 {
-                    ambianceLayer3.Play();
+                    PlayAudio(ambianceLayer3);
                 }
                 if (pagesCollected == 4)
                 {
-                    ambianceLayer4.Play();
+                    PlayAudio(ambianceLayer4);
                 }
                 if (pagesCollected == 5)
                 {
-                    ambianceLayer5.Play();
+                    PlayAudio(ambianceLayer5);
                 }
                 if (pagesCollected == 6)
                 {
-                    ambianceLayer6.Play();
+                    PlayAudio(ambianceLayer6);
                 }
                 if (pagesCollected == 7)
                 {
-                    ambianceLayer7.Play();
+                    PlayAudio(ambianceLayer7);
                 }
                 if (pagesCollected == 8)
                 {
-                    ambianceLayer8.Play();
+                    PlayAudio(ambianceLayer8);
                 }
+
                 intText.SetActive(false);
-                this.gameObject.SetActive(false);
+                DisablePickupObject();
                 interactable = false;
             }
         }
+    }
+
+    private void PlayAudio(AudioSource audioSource)
+    {
+        if (audioSource == null || audioSource.clip == null)
+        {
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(audioSource.clip, transform.position, Mathf.Clamp01(audioSource.volume));
+    }
+
+    private void DisablePickupObject()
+    {
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+
+        Renderer rend = GetComponent<Renderer>();
+        if (rend != null)
+        {
+            rend.enabled = false;
+        }
+
+        enabled = false;
     }
 }
