@@ -8,12 +8,15 @@ public class jumpscareTrig : MonoBehaviour
     public Animator monsterAnim;
     public string sceneName;
     public float jumpscare;
+    public monsterAI monsterScript;
 
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
             playerObj.SetActive(false);
+            monsterScript.enabled = false;
+            monsterAnim.speed = 1f;
             jumpscareCam.SetActive(true);
             ambianceLayers.SetActive(false);
             StartCoroutine(changeScene());
