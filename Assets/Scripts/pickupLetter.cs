@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class pickupLetter : MonoBehaviour
 {
-    public GameObject collectTextObj, intText;
+    public GameObject collectTextObj, intText, monster;
     public AudioSource pickupSound, ambianceLayer1, ambianceLayer2, ambianceLayer3, ambianceLayer4, ambianceLayer5, ambianceLayer6, ambianceLayer7, ambianceLayer8;
     public bool interactable;
     public static int pagesCollected;
     public Text collectText;
+
+    void Start()
+    {
+        pagesCollected = 0;
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -34,74 +39,49 @@ public class pickupLetter : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 pagesCollected = pagesCollected + 1;
+                if(monster.active == false)
+                {
+                    monster.SetActive(true);
+                }
                 collectText.text = pagesCollected + "/8 pages";
                 collectTextObj.SetActive(true);
-
-                PlayAudio(pickupSound);
+                pickupSound.Play();
                 if(pagesCollected == 1)
                 {
-                    PlayAudio(ambianceLayer1);
+                    ambianceLayer1.Play();
                 }
                 if (pagesCollected == 2)
                 {
-                    PlayAudio(ambianceLayer2);
+                    ambianceLayer2.Play();
                 }
                 if (pagesCollected == 3)
                 {
-                    PlayAudio(ambianceLayer3);
+                    ambianceLayer3.Play();
                 }
                 if (pagesCollected == 4)
                 {
-                    PlayAudio(ambianceLayer4);
+                    ambianceLayer4.Play();
                 }
                 if (pagesCollected == 5)
                 {
-                    PlayAudio(ambianceLayer5);
+                    ambianceLayer5.Play();
                 }
                 if (pagesCollected == 6)
                 {
-                    PlayAudio(ambianceLayer6);
+                    ambianceLayer6.Play();
                 }
                 if (pagesCollected == 7)
                 {
-                    PlayAudio(ambianceLayer7);
+                    ambianceLayer7.Play();
                 }
                 if (pagesCollected == 8)
                 {
-                    PlayAudio(ambianceLayer8);
+                    ambianceLayer8.Play();
                 }
-
                 intText.SetActive(false);
-                DisablePickupObject();
+                this.gameObject.SetActive(false);
                 interactable = false;
             }
         }
-    }
-
-    private void PlayAudio(AudioSource audioSource)
-    {
-        if (audioSource == null || audioSource.clip == null)
-        {
-            return;
-        }
-
-        AudioSource.PlayClipAtPoint(audioSource.clip, transform.position, Mathf.Clamp01(audioSource.volume));
-    }
-
-    private void DisablePickupObject()
-    {
-        Collider col = GetComponent<Collider>();
-        if (col != null)
-        {
-            col.enabled = false;
-        }
-
-        Renderer rend = GetComponent<Renderer>();
-        if (rend != null)
-        {
-            rend.enabled = false;
-        }
-
-        enabled = false;
     }
 }
